@@ -1,23 +1,30 @@
+import BuildTable from "./components/build-table";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import BuildTable from './components/build-table'; 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    //lets get fake users from our JSONPlaceHolder
+
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.error("Error fetching data", err));
+  }, []);
+
   const settingsObject = {
-    headers: ['Name', 'Age', 'Email'] 
+    headers: ["Id", "Name", "Username", "Email", "Street", "Phone", "Website", "Role"],
   };
 
-  const data = [
-    { Name: 'John', Age: 25, Email: 'john@example.com' },
-    { Name: 'Alice', Age: 30, Email: 'alice@example.com' },
-    
-  ];
 
   return (
     <div className="container">
       <h1>Table Builder App</h1>
-      <BuildTable settings={settingsObject} data={data} />
+      <BuildTable settings={settingsObject} data={userData} />
     </div>
   );
 }
