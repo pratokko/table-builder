@@ -11,10 +11,10 @@ const BuildTable = ({ settings, data }) => {
 
   // Render table rows with data
   const renderTableRows = () => {
-    return data.map((row, index) => (
+    return data.map((user, index) => (
       <tr key={index}>
-        {Object.values(row).map((value, i) => (
-          <td key={i}>{value}</td>
+        {Object.keys(user).map((key, i) => (
+           <td key={i}>{typeof user[key] === 'object' ? JSON.stringify(user[key]) : user[key]}</td>
         ))}
       </tr>
     ));
